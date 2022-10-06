@@ -1,0 +1,62 @@
+#include<stdio.h>
+
+int main() {
+    int a[3][3],b[3][3];
+    int *p,*q;
+    int i,j;
+    
+    p = &a[0][0];
+    q = &b[0][0];
+    
+    for(i=0;i<3;i++) {
+        for(j=0;j<3;j++) {
+            printf("a[%d] [%d] = ",i,j);
+            scanf("%d",(p + ((i*3) + j)));
+        }
+    }
+    
+     for(i=0;i<3;i++) {
+        for(j=0;j<3;j++) {
+            
+            printf("%d \t",*(p+((i*3)+j)));
+            
+        }
+    }
+    
+   for(i=0;i<3;i++) {
+        for(j=0;j<3;j++) {
+            printf("b[%d] [%d] = ",i,j);
+            scanf("%d",(q + ((i*3) + j)));
+        }
+    }
+    
+    for(i=0;i<3;i++) {
+        for(j=0;j<3;j++) {
+            
+            printf("%d \t",*(q+((i*3)+j)));
+            
+        }
+    }
+int c[3][3];
+    
+    for(i=0;i<3;i++) {
+        for(j=0;j<3;j++) {
+            c[i][j] = *(p + ((i*3) + j)) + *(q + ((i*3) + j));
+        }
+    }
+    
+    for(i=0;i<3;i++) {
+        for(j=0;j<3;j++) {
+            printf("Sum : [%d] [%d] = [%d]\n",i,j,c[i][j]);
+            
+        }
+    }
+    
+    for(i=0;i<3;i++) {
+        for(j=0;j<3;j++) {
+            printf("%d",c[i][j]);
+            printf("\t");
+        }
+        printf("\n");
+    }
+}
