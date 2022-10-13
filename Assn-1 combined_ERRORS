@@ -2,16 +2,18 @@
 
 int main() {
     
-    printf("Input \n1 for sum \n2 for matrix multiplication \n3 for saddle point");
-    scanf("%d",type);
+    int type;
+    int a[3][3],s[2][2],b[3][3],min,i,j,k,max;
+    int *p,*q;
+    
+    printf("Input \n1 for sum \n2 for matrix multiplication \n3 for saddle point\n");
+    scanf("%d",&type);
     
     switch (type) {
      
     case 1:
-        int a[3][3],b[3][3];
-        int *p,*q;
-        int i,j;
         
+        printf("Sum of matrix\n");
         p = &a[0][0];
         q = &b[0][0];
         
@@ -69,11 +71,8 @@ int main() {
         break;
         
     case 2:
-
-        int a[3][3],b[3][3];
-        int *p,*q;
-        int i,j,k;
         
+        printf("Matrix Multiplication\n");
         p = &a[0][0];
         q = &b[0][0];
         
@@ -150,8 +149,8 @@ int main() {
         break;
      
     case 3:
-        int a[3][3],s[2][2],min,i,j,k,max;
-    
+        
+        printf("Find Saddle pt.\n");
         for(i=0;i<3;i++) {
             
             for(j=0;j<3;j++) {
