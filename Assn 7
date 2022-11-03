@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct abc {
+    char name[20];
+    int prn;
+    struct abc *prev;
+    struct abc *next;
+};
+
+void insertS(struct abc *head)
+{
+    struct abc *new;
+    new = (struct abc *)malloc(sizeof(struct abc));
+    printf("Enter the name of the secretary: ");
+    scanf(" %s",new->name);
+    printf("Enter the PRN of the secretary: ");
+    scanf("%d",&new->prn);
+    new->next = NULL;
+    new->prev = NULL;
+}
+
+void insertM(struct abc *head)
+{
+    struct abc *new;
+    new = (truct abc *)malloc(sizeof(struct abc));
+    printf("Enter the name of the member: ");
+    scanf(" %s",new->name);
+    printf("Enter the PRN of the member: ");
+    scanf("%d",&new->prn);
+    new->next = NULL;
+    new->prev = NULL;
+    new->prev = head;
+    new->next = head->next;
+    head->next->prev = new;
+    head->next = new;
+}
+
+void main()
+{
+    struct abc *head;
+    head = (struct abc *)malloc(sizeof(struct abc));
+    printf("Enter the name of the president: ");
+    scanf(" %s",head->name);
+    printf("Enter the PRN of the president: ");
+    scanf("%d", &head->prn);
+    head->next = NULL;
+    head->prev = NULL;
+    
+    int ch, y;
+    int a;
+    do
+    {
+        printf("Enter choice:\n 1.Insert members\n 2.Delete president\n 3.Delete secretary\n 4.Delete members\n 5.Count members\n 6.Reverse the order\n 7.Display\n");
+        scanf("%d",&ch);
+        switch(ch) 
+        {
+            case 1: insertM(head);
+            break;
+            
+            // case 2: deleteP(head);
+            // break;
+            
+            // case 3: deleteS(head);
+            // break;
+            
+            // case 4: deleteM(head);
+            // break;
+            
+            // case 5: count(head);
+            // break;
+            
+            // case 6: reverse(head);
+            // break;
+            
+            // case 7: display(head);
+            // break;
+   
+        }
+    printf("Do you want to continue:\n 1.Yes\n 0.No\n");
+    scanf("%d",a);
+    }
+    while (a==1);
+
+}
