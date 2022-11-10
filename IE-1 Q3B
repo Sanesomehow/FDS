@@ -1,0 +1,132 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct list
+{
+    int marks, rollNo;
+    struct list *next;
+};
+
+
+void display (struct list *head)
+{
+    struct list *temp;
+    temp = head;
+    printf ("\tRoll No\t\tMarks\n");
+    while (temp != NULL)
+    {
+        printf ("\t  %d\t\t%d\n", temp->rollNo, temp->marks);
+        temp = temp->next;
+    }
+}
+
+struct list * reverse (struct list *head)
+{
+    struct list *p, *q, *r;
+    p = head;
+    q = p->next;
+    r = q->next;
+    while (1)
+    {
+        q->next = p;
+        if (r == NULL)
+	{
+	    break;
+	}
+        p = q;
+        q = r;
+        r = r->next;
+    }
+    head->next = NULL;
+    head = q;
+    return head;
+}
+
+struct list *max_marks (struct list *head)
+{
+    struct list *temp, *p;
+    temp = head;
+    p = temp->next;
+    while (p != NULL)
+    {
+        if (temp->marks < p->marks)
+	    {
+	        temp = p;
+	    }
+        p = p->next;
+    }
+    return temp;
+}
+
+struct list *min_marks (struct list *head)
+{
+    struct list *temp, *p;
+    temp = head;
+    p = temp->next;
+    while (p != NULL)
+    {
+        if (temp->marks > p->marks)
+        {
+    	    temp = p;
+    	}
+        p = p->next;
+    }
+    return temp;
+}
+
+float average (struct list *head)
+{
+    struct list *temp;
+    float avg, sum = 0, n = 0;
+    temp = head;
+    while (temp != NULL)
+    {
+        sum += temp->marks;
+        temp = temp->next;
+        n++;
+    }
+    avg = sum / n;
+    return avg;
+}
+
+void main()
+{
+    int n;
+    printf("Enter the no. of nodes: ");
+    scanf("%d",&n);
+    
+    struct list *head, *new, *temp, *max, *min;
+    head = (struct list *) malloc(sizeof(struct list));
+    printf("Enter the Roll no.: ");
+    scanf("%d",&head->rollNo);
+    printf("Enter the marks: ");
+    scanf("%d",&head->marks);
+    head->next = NULL;
+    temp = head;
+    
+    for (int i=0;i<n-1;i++) 
+    {
+        new =  (struct list *) malloc(sizeof(struct list));
+        printf("Enter the Roll no.: ");
+        scanf("%d",&new->rollNo);
+        printf("Enter the marks: ");
+        scanf("%d",&new->marks);
+        
+        new->next = NULL;
+        temp->next = new;
+        temp = temp->next;
+    }
+    
+    
+
+    printf ("\nLinked List Before Reversing\n");
+    display (head);
+    head = reverse (head);
+    printf ("\nLinked List After Reversing\n");
+    display (head);
+    max = max_marks (head);
+    printf ("\nMaximum Marks %d by Roll No %d", max->marks, max->rollNo);
+    min = min_marks (head);
+    printf ("\nMinimum Marks %d by Roll No %d", min->marks, min->rollNo);
+    printf ("\nAverage Marks %.2f\n", average (head));
+}
