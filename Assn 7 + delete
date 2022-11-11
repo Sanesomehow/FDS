@@ -4,7 +4,7 @@ struct abc
 {
   char name[20];
   int prn;
-  struct abc *prv;
+  struct abc *prev;
   struct abc *next;
 }*head;
 void insert (struct abc *head)
@@ -17,7 +17,7 @@ void insert (struct abc *head)
   scanf ("%d", &new->prn);
   new->next = NULL;
   head->next = new;
-  new->prv = head;
+  new->prev = head;
 }
   void insertm(void){
   struct abc *new;
@@ -27,8 +27,8 @@ void insert (struct abc *head)
   printf ("\nenter the prn:");
   scanf ("%d", &new->prn);
   new->next=head->next;
-  new->prv=head;
-  head->next->prv=new;
+  new->prev=head;
+  head->next->prev=new;
   head->next=new;
 
   
@@ -37,7 +37,7 @@ void deletep(void){
     struct abc* temp;
     temp=head;
     head=head->next;
-    head->prv=NULL;
+    head->prev=NULL;
     free(temp);
     
 }
@@ -53,33 +53,14 @@ void delete_s(void){
 }
 void deletem(void){
     
-}
-void count(void){
-    struct abc* temp;
-    int i=1;
-    while(temp!=NULL){
-        i++;
-        temp=temp->next;
-    }
-    printf("%d are the no. of nodes",i);
-}
+
 void display(void){
     struct abc* temp;
     while(temp!=NULL){
         printf("\n name:%s\nprn:%d\n",temp->name,temp->prn);
         temp=temp->next;
     }
-}
-void reverse(void){
-    struct abc* temp;
-     while(temp->next!=NULL){
-        temp=temp->next;
-    }
-     while(temp!=NULL){
-        printf("\n name:%s\nprn:%d\n",temp->name,temp->prn);
-        temp=temp->prv;
-    }
-}
+
 int main ()
 {
  // struct abc *head;
@@ -89,7 +70,7 @@ int main ()
   printf ("\nenter the prn:");
   scanf ("%d", &head->prn);
   head->next = NULL;
-  head->prv = NULL;
+  head->prev = NULL;
   int ch, y;
   do
     {
