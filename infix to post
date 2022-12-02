@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include<stdlib.h>
 #include<ctype.h>
+#include<math.h>
 
 /* INFIX TO POSTFIX*/
 
@@ -11,8 +12,12 @@ struct stack{
 void push(int);
 int pop();
 int precedence(char);
+int evaluate();
+int pop1();
+int push1();
 
 struct stack *top=NULL;
+int stack1[20], top1 = -1;
 
 int main()
 {
@@ -108,9 +113,10 @@ int pop()
     }
     return item;
 }
-void evaluate(char postfix[])
+int evaluate(char postfix[])
 {
-    int i=0; num, n1, n2, n;
+    int i=0;
+    int num, n1, n2, n3;
     
     while(postfix[i] != '\0')
     {
@@ -127,7 +133,7 @@ void evaluate(char postfix[])
             switch(postfix[i])
             {
                 case'^':
-                    n3 = n2^n1;
+                    n3 = pow(n2,n1);
                     push1(n3);
                     break;
                 case'*':
@@ -150,6 +156,24 @@ void evaluate(char postfix[])
                 defult:return 0;
             }
         }
+        i++;
+    }
+    printf("\nAnswer is %d",pop1());
+    
+
+}
+
+int push1(int op)
+    {
+        top1++;
+        stack1[top1] = op;
     }
     
-}
+int pop1()
+    {
+        int e;
+        e = stack1[top1];
+        top1--;
+        return e;
+    }
+    
