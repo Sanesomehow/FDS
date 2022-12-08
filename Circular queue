@@ -1,0 +1,123 @@
+
+#include <stdio.h>
+#include<stdlib.h>
+#define max 10
+
+int queue[max];
+int front = -1, rear = -1;
+
+void Enqueue()
+{
+    int ele;
+    printf("Enter the element: ");
+    scanf("%d",&ele);
+    
+    if ((rear + 1)%max == front || rear == max-1 && front == 0)
+    {
+        printf("\nOverflow");
+        return;
+    }
+    else if (rear == -1)
+    {
+        front = rear = 0;
+        queue[rear] = ele;
+    }
+    else
+    {
+        rear = (rear + 1)%max;
+        queue[rear] = ele;
+    }
+}
+
+void Dequeue()
+{
+    if (front == -1)
+    {
+        printf("\nUnderflow");
+        return;
+    }
+    else if (front == rear)
+    {
+        printf("\nThe element deleted is: %d", queue[front]);
+        front = rear = -1;
+    }
+    else
+    {
+        printf("\nThe element deleted is: %d", queue[front]);
+        front = (front + 1)%max;
+    }
+}
+
+void Display()
+{
+    int temp;
+    temp = (front + 1)%max;
+    printf("%d\t", queue[front]);
+    while(temp != front && queue[temp] != 0)
+    {
+        printf("%d\t", queue[temp]);
+        temp = (temp + 1)%max;
+    }
+}
+
+/*
+int Display()
+{
+    int temp;
+    temp = (front + 1)%max;
+    printf("%d\t", queue[front]);
+    while(temp != front)
+    {
+        if (queue[temp] != 0)
+        {
+        printf("%d\t", queue[temp]);
+        }
+        temp = (temp + 1)%max;
+    }
+}
+*/
+
+/*
+void Display()
+{
+    if (rear > front)
+    {
+        for(int i = front; i <= rear; i++)
+        {
+            printf("%d", queue[i]);
+        }
+        else
+        {
+            for (int i = front; i < max; i++)
+                printf("%d", queue[i])
+            for (int i = 0; i < rear; i++)
+                printf("%d", queue[i]);
+        }
+    }
+}
+*/
+
+
+void main()
+{
+    int ch, y;
+      
+    y:
+    printf("Enter your choice\n1.Insert\n2.Delete\n3.Display\n");
+    scanf("%d", &ch);
+  
+    switch(ch)
+    {
+        case 1:Enqueue();
+               break;
+        case 2:Dequeue();
+               break;
+        case 3:Display();
+               break;
+    }
+    
+    printf("\nDo you want to continue  1.Yes\t2.No: ");
+    scanf("%d", &y);
+    if (y == 1)
+        goto y;
+}
