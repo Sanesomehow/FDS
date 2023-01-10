@@ -1,0 +1,177 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define str struct ll
+
+struct ll
+{
+    int prn;
+    char name[20];
+    str *nxt, *prv;
+}*head, *new, *temp, *back;
+
+void cPrez()
+{
+    head = (str *)malloc(sizeof(str));
+    printf("Enter the name of the President: ");
+    scanf("%s", head->name);
+    printf("\nEnter the PRN of the President: ");
+    scanf("%d", &head->prn);
+    head->nxt = NULL;
+    head->prv = NULL;
+}
+
+void cSect()
+{
+    new = (str *)malloc(sizeof(str));
+    printf("Enter the name of the Secretary: ");
+    scanf("%s", new->name);
+    printf("\nEnter the PRN of the Secretary: ");
+    scanf("%d", &new->prn);
+    new->nxt = NULL;
+    new->prv = head;
+    head->nxt = new;
+}
+
+void cMem()
+{
+    new  = (str *)malloc(sizeof(str));
+    printf("Enter the name of the Member: ");
+    scanf("%s", new->name);
+    printf("\nEnter the PRN of the Member: ");
+    scanf("%d", &new->prn);
+    temp = head;
+    while(temp->nxt != NULL)
+    {
+        temp = temp->nxt;
+    }
+    temp->prv->nxt = new;
+    new->prv = temp->prv;
+    temp->prv = new;
+    new->nxt = temp;
+    
+}
+
+void dPrez()
+{
+    temp = head;
+    free(head);
+    head = temp->nxt;
+    head->prv = NULL;
+    printf("The President node has been deleted\n");
+}
+
+void dSect()
+{
+    temp = head;
+    while(temp->nxt != NULL)
+    {
+        temp = temp->nxt;
+    }
+    temp->prv->nxt = NULL;
+    temp->prv = NULL;
+    free(temp);
+    printf("The Secretary node has been deleted\n");
+}
+
+void dMem()
+{
+    temp = head->nxt;
+    char mName[20];
+    printf("Enter the name of the member to be deleted: ");
+    scanf("%s", mName);
+    while(strcmp(temp->name, mName) && temp->nxt != NULL)
+    {
+        temp = temp->nxt;
+    }
+    if(temp->nxt == NULL)
+    {
+        printf("The member is not in the list\n");
+    }
+    else
+    {
+        temp->prv->nxt = temp->nxt;
+        temp->nxt->prv = temp->prv;
+        temp->nxt = NULL;
+        temp->prv = NULL;
+        free(temp);
+        printf("The member node has been deleted\n");
+    }
+}
+
+void display()
+{
+    temp = head;
+    
+    while(temp != NULL)
+    {
+        printf("%d\t%s\n", temp->prn, temp->name);
+        temp = temp->nxt;
+    }
+}
+
+void count()
+{
+    int n = 0;
+    temp = head->nxt;
+    while(temp->nxt != NULL)
+    {
+        n++;
+        temp = temp->nxt;
+    }
+    printf("The number of members is: %d", n);
+}
+
+void reverse()
+{
+    temp = head;
+    back = head;
+    while(temp->nxt != NULL)
+    {
+        back = temp;
+        temp = temp->nxt;
+    }
+    while(temp != NULL)
+    {
+        temp->nxt = back;
+        back->prv = temp;
+        if(temp->prv = NULL)
+        {
+            head = temp;
+        }
+        temp = temp->prv;
+    }
+}
+
+void main()
+{
+    rep:
+    
+    printf("Enter your choice:\n1.Insert M\n2.Delete M\n3.Delete P\n4.Delete S\n5.Count\n6.Display\n7.Reverse\n");
+    int ch, y;
+    scanf("%d", &ch);
+    switch(ch)
+    {
+        case 1: cMem();
+            break;
+        case 2: dMem();
+            break;
+        case 3: dPrez();
+            break;
+        case 4: dSect();
+            break;
+        case 5: count();
+            break;
+        case 6: display();
+            break;
+        case 7: reverse();
+            break;
+        default: break;
+    }
+    printf("\nDo you to perform it again (0/1) : ");
+    scanf(" %d",&y);
+    if(y == 1)
+    {
+    goto rep;
+    }
+}
