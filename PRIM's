@@ -1,0 +1,62 @@
+#include<stdio.h>
+void main()
+{
+    int i, j, n, a, b, p, q, min, total = 0, e = 1;
+    
+    
+    printf("Enter the no. of vertices: ");
+    scanf("%d", &n);
+    int cost[n][n];
+    int visited[n];
+    
+    for(i=0;i<n;i++)
+    {
+        visited[i] = 0;
+    }
+    
+    printf("\nEnter the adjacent matrix: \n");
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            scanf("%d", &cost[i][j]);
+            // printf("\t");
+            if(cost[i][j] == 0)
+            {
+                cost[i][j] = 999;
+            }
+        }
+        printf("\n");
+        
+    }
+    
+    visited[0] = 1;
+    while(e<n)
+    {
+        for(i=0,min=999;i<n;i++)
+        {
+            for(j=0;j<n;j++)
+            {
+                if(cost[i][j] < min)
+                {
+                    if(visited[i] != 0)
+                    {
+                        min = cost[i][j];
+                        a = p = i;
+                        b = q = j;
+                    }
+                }
+            }
+            
+            if(visited[p]==0 || visited[q]==0)
+            {
+                total = total + min;
+                printf("The edge is (%d-%d) eith cost = %d\n", a, b,min);
+                visited[b] = 1;
+            }
+            cost[a][b] = cost[b][a] = 999;
+        }
+        e++;
+    }
+    printf("The Minimum cost is = %d", total);
+}
