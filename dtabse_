@@ -1,0 +1,154 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct database
+{
+    int id;
+    char name[10];
+    char mNo[10];
+    int salary;
+    struct database *next, *prev;
+}str;
+
+str *head = NULL;
+str *temp = NULL;
+str *new = NULL;
+
+void insert()
+{
+    new = (str *)malloc(sizeof(str));
+    printf("Enter the ID: ");
+    scanf(" %d", &new->id);
+    printf("\nEnter your name: ");
+    scanf(" %s", new->name);
+    printf("\nEnter the Salary: ");
+    scanf(" %d", &new->salary);
+    printf("\nEnter your Mobile No: ");
+    scanf(" %s", new->mNo);
+    printf("\n");
+    
+    if(head = NULL)
+    {
+        head = new;
+    }
+    else
+    {
+        temp = head;
+        while(temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = new;
+        new->prev = temp;
+    }
+}
+
+void dFront()
+{
+    printf("Showing list in Normal Order\n");
+    temp = head;
+    while(temp != NULL)
+    {
+        printf("%d\t%s\t%d\t%s\n", temp->id, temp->name, temp->salary, temp->mNo);
+        temp = temp->next;
+    }
+}
+
+void dBack()
+{
+    printf("Showing list in Reverse Order\n");
+    temp = head;
+    while(temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    while(temp != NULL)
+    {
+        printf("%d\t%s\t%d\t%s\n", temp->id, temp->name, temp->salary, temp->mNo);
+        temp = temp->prev;
+    }
+}
+
+str * delete()
+{
+    int id, count = 1;
+    temp = head;
+    printf("Enter the ID of the data to be deleted: ");
+    scanf(" %d", &id);
+    printf("\n");
+    while(temp->id != id)
+    {
+        count++;
+        temp = temp->next;
+        
+    }
+    if(count == 1)
+    {
+        free(head);
+        temp = temp->next;
+        temp->prev = NULL;
+    }
+    else{
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+    }
+    return head;
+}
+
+str modify()
+{
+    int id, ch;
+    temp = head;
+    printf("Enter the ID of the data to be edited: ");
+    scanf(" %d", &id);
+    printf("\n");
+    while(temp->id != id)
+    {
+        temp = temp->next;
+    }
+    printf("Enter the data to be modified: \n1.salary\n2.Mobile No.\n");
+    scanf("%d", &ch);
+    if(ch == 1)
+    {
+        printf("Enter the new Salary: ");
+        scanf(" %d", &temp->salary);
+        printf("\n");
+    }
+    else if(ch == 2)
+    {
+        printf("Enter the new Mobile No: ");
+        scanf(" %s", temp->mNo);
+        printf("\n");
+    }
+}
+
+
+void main()
+{
+    int ch,y; 
+    do{ 
+        printf("1.Insert \n2.Delete \n3.Modify \n4.Display a list forward\n5.Display a list backward\n");
+        printf("Enter your choice:"); 
+        scanf(" %d",&ch); 
+        switch(ch) 
+        { 
+            case 1: 
+                insert(); 
+                break; 
+            case 2: 
+                head=delete(); 
+                break; 
+            case 3: 
+                modify(); 
+                break; 
+            case 4: 
+                dFront(); 
+                break; 
+            case 5: 
+                dBack(); 
+                break; 
+        } 
+        printf("Do you want to continue(0/1):"); 
+        scanf(" %d",&y); 
+    }while(y == 1); 
+}
