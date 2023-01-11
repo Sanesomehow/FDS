@@ -5,16 +5,149 @@
 
 str 
 {
-    int key;
+    int data;
     str *left, *right;
+};
+
+str *create(int key)
+{
+    str *new = malloc;
+    new->left = NULL;
+    new->right = NULL;
+    new->data = key;
+    return new;
 }
 
 str *insert(str *root, int key)
 {
     if(root == NULL)
     {
-        
+        return create(key);
     }
+    else if(key<root->data)
+    {
+        root->left = insert(root->left, key);
+    }
+    else if(key> root->data)
+    {
+        root->right = insert(root->right, key);
+    }
+    return root;
+}
+
+void search(str *root, int key)
+{
+    if(root == NULL)
+    {
+        printf("Data not found\n");
+    }
+    else if(key == root->data)
+    {
+        printf("%d data has been found", root->data);
+    }
+    else if(key < root->data)
+    {
+        search(root->left, key);
+    }
+    else if(key > root->data)
+    {
+        search(root->right, key);
+    }
+}
+
+void inorder(str *root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    else
+    {
+        inorder(root->left);
+        printf("%d", root->data);
+        inorder(root->right);
+    }
+    printf("\n");
+}
+
+void preorder(str *root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    else
+    {
+        printf("%d\t", root->data);
+        inorder(root->left);
+        inorder(root->right);
+    }
+    printf("\n");
+}
+
+void postorder(str *root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    else
+    {
+        inorder(root->left);
+        inorder(root->right);
+        printf("%d\t", root->data);
+    }
+    printf("\n");
+}
+
+int inS(str *temp)
+{
+    while(temp != NULL)
+    {
+        temp = temp->left;
+    }
+    return temp->data;
+}
+
+str * delete(str *root, int key)
+{
+    if(root == NULL)
+    {
+        return root;
+    }
+    else if(key< root->data)
+    {
+        root->left = delete(root->left, key);
+    }
+    else if(key > root->data)
+    {
+        root->right = delete(root->right, key);
+    }
+    else
+    {
+        if(root->left == NULL)
+        {
+            str *temp;
+            temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if(root->right == NULL)
+        {
+            str *temp;
+            temp = root->left;
+            free(root);
+            return temp;
+        }
+        else
+        {
+            str *temp;
+            temp = root->right;
+            root->data = inS(temp);
+            root->right = delete(root->right, root->data);
+        }
+    }
+    return root;
 }
 
 
@@ -22,7 +155,7 @@ str *insert(str *root, int key)
 int main()
 {
     int key, ch, y;
-    str root = NULL;
+    str *root = NULL;
     do{
         printf("1.Insert\n2.Inorder\n3.Postorder\n4.Preorder\n5.Delete\n6.Search\n");
         scanf("%d", &ch);
@@ -31,7 +164,7 @@ int main()
             case 1: 
                 printf("Enter the data: ");
                 scanf("%d", &key);
-                insert(root, key);
+                root = insert(root, key);
                 break;
             case 2: 
                 inorder(root);
@@ -45,7 +178,7 @@ int main()
             case 5: 
                 printf("Enter the data to delete: ");
                 scanf("%d", &key);
-            delete(root, key);
+                root = delete(root, key);
                 break;
             case 6: 
                 printf("Enter the data to search: ");
